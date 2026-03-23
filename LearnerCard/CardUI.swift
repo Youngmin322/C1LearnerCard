@@ -7,44 +7,31 @@
 
 import SwiftUI
 
-let card: [cardData] = [
-    cardData(name: "조영민",
-             nickName: "Owen",
-             session: "오전",
-             phone: "010-9659-9798",
-             descriptions: ["진진가1", "진진가2", "진진가3"]
-             ),
-    cardData(name: "김애플",
-             nickName: "러너",
-             session: "오후",
-             phone: "010-1111-2222",
-             descriptions: ["진진진"]
-            )
-]
-
 struct CardUI: View {
+    var learnerCard: cardData
+    
     var body: some View {
         VStack {
             HStack {
                 Circle()
                     .frame(width: 40, height: 40)
                     .overlay(
-                        Text("조")
+                        Text(String(learnerCard.nickName.prefix(1)))
                             .foregroundColor(.white)
                             .bold()
-                    )
+                        )
                     .foregroundColor(.blue)
                 
                 VStack(alignment: .leading) {
-                    Text(card[0].name)
+                    Text(learnerCard.name)
                         .bold()
                     
-                    Text(card[0].nickName)
+                    Text(learnerCard.nickName)
                 }
                 
                 Spacer()
                 
-                Text(card[0].session)
+                Text(learnerCard.session)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 4)
                     .background(Capsule().fill(Color.blue.opacity(0.15)))
@@ -61,7 +48,7 @@ struct CardUI: View {
                 
                 Spacer()
                 
-                Text(card[0].phone)
+                Text(learnerCard.phone)
                     .font(.subheadline)
             }
             
@@ -72,7 +59,7 @@ struct CardUI: View {
                     .font(.caption)
                     .foregroundColor(.gray)
                 
-                ForEach(card[0].descriptions, id: \.self) { description in
+                ForEach(learnerCard.descriptions, id: \.self) { description in
                     Text("•\(description)")
                         .font(.subheadline)
                         .padding(.horizontal)
@@ -88,5 +75,5 @@ struct CardUI: View {
 }
 
 #Preview {
-    CardUI()
+    CardUI(learnerCard: cardData(name: "조영민", nickName: "Owen", session: "오전", phone: "010-9659-9798", descriptions: ["진진가 1", "진진가 2"]))
 }
