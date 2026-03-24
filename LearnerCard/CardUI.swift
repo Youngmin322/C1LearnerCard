@@ -11,7 +11,7 @@ struct CardUI: View {
     var learnerCard: cardData
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading, spacing: 4) {
             HStack {
                 Circle()
                     .frame(width: 40, height: 40)
@@ -56,7 +56,7 @@ struct CardUI: View {
             
             VStack(alignment: .leading, spacing: 4) {
                 Text("진진가")
-                    .font(.caption)
+                    .font(.subheadline)
                     .foregroundColor(.gray)
                 
                 ForEach(learnerCard.descriptions, id: \.self) { description in
