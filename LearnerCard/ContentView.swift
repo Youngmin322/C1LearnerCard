@@ -48,7 +48,7 @@ struct ContentView: View {
                 ZStack {
                     ForEach(Array(card.enumerated()), id:\.element.id) { index, item in
                         CardUI(learnerCard: item)
-                            .offset(y: selectedIndex == nil ? CGFloat(index) * 35 : (selectedIndex == index ? 0 : CGFloat(index) * 40))
+                            .offset(y: selectedIndex == nil ? CGFloat(index) * 90 : (selectedIndex == index ? 0 : CGFloat(index) * 40))
                             .onTapGesture {
                                 withAnimation(.spring()) {
                                     
