@@ -76,5 +76,5 @@ struct CardUI: View {
 }
 
 #Preview {
-    CardUI(learnerCard: cardData(name: "조영민", nickName: "Owen", session: "오전", phone: "010-9659-9798", descriptions: ["진진가 1", "진진가 2"]))
+    CardUI(learnerCard: cardData(name: "조영민", nickName: "Owen", session: "오전", profileImageURL: "", phone: "010-9659-9798", descriptions: ["진진가 1", "진진가 2"]))
 }
