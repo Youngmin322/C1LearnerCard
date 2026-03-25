@@ -38,9 +38,12 @@ struct LearnerCardView: View {
                     VStack(spacing: 0) {
                         ForEach(Array(filteredCardData.enumerated()), id:\.element.id) { index, item in
                             GeometryReader { geometry in
+                                let minY = geometry.frame(in: .global).minY
+                                let offsetY = max(0, 100 - minY)
+                                
                                 CardUI(learnerCard: item)
-                                //Text("\(geometry.frame(in: .global).minY)")
-                                    .offset(y: max(0, 100 - geometry.frame(in: .global).minY))
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .offset(y: offsetY)
                                     .onTapGesture {
                                         withAnimation(.spring()) {
                                             if selectedIndex == index {
@@ -52,7 +55,7 @@ struct LearnerCardView: View {
                                     }
                                     .zIndex(selectedIndex == index ? 1 : 0)
                             }
-                            .frame(height: 200)
+                            .frame(height: 200, alignment: .center)
                         }
                     }
                 }
