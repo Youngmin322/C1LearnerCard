@@ -75,6 +75,10 @@ struct LearnerCardView: View {
                 modelContext.insert(cardData(id: UUID(), name: "조영민", nickName: "Owen", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가11","진진가1"]))
                 modelContext.insert(cardData(id: UUID(), name: "백지훈", nickName: "John", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가22","진진가2"]))
                 modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Gani", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
+                modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Gani", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
+                modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Gani", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
+                modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Gani", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
+                modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Gani", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
             }
         }
     }
@@ -84,3 +88,6 @@ struct LearnerCardView: View {
     LearnerCardView()
         .modelContainer(for: cardData.self, inMemory: true)
 }
+
+
+
