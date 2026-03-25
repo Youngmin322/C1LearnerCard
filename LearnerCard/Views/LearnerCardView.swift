@@ -8,37 +8,6 @@
 import SwiftUI
 import SwiftData
 
-//let card: [cardData] = [
-//    cardData(name: "조영민",
-//             nickName: "Owen",
-//             session: "오전",
-//             profileImageURL: "", phone: "010-9659-9798",
-//             descriptions: ["진진가1", "진진가2", "진진가3"]),
-//    cardData(name: "존",
-//             nickName: "러너",
-//             session: "오후",
-//             profileImageURL: "", phone: "010-1111-2222",
-//             descriptions: ["진진진"]),
-//    
-//    cardData(name: "가니",
-//             nickName: "러너",
-//             session: "오후",
-//             profileImageURL: "", phone: "010-1111-2222",
-//             descriptions: ["진진진"]),
-//    
-//    cardData(name: "매버릭",
-//             nickName: "러너",
-//             session: "오후",
-//             profileImageURL: "", phone: "010-1111-2222",
-//             descriptions: ["진진진"]),
-//    
-//    cardData(name: "샨",
-//             nickName: "러너",
-//             session: "오후",
-//             profileImageURL: "", phone: "010-1111-2222",
-//             descriptions: ["진진진"])
-//]
-
 struct LearnerCardView: View {
     
     @State var selectedIndex: Int? = nil
@@ -58,32 +27,51 @@ struct LearnerCardView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                ZStack {
-                    ForEach(Array(filteredCardData.enumerated()), id:\.element.id) { index, item in
-                        CardUI(learnerCard: item)
-                            .offset(y: selectedIndex == nil ? CGFloat(index) * 90 : (selectedIndex == index ? 0 : CGFloat(index) * 40))
-                            .onTapGesture {
-                                withAnimation(.spring()) {
-                                    
-                                    if selectedIndex == index {
-                                        selectedIndex = nil
-                                    } else {
-                                        selectedIndex = index
+            if Data.isEmpty {
+                VStack {
+                    Text("아직 러너카드가 없어요! \n 러너를 만나서 교환해보세요!")
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
+                }
+            } else {
+                ScrollView {
+                    VStack(spacing: 0) {
+                        ForEach(Array(filteredCardData.enumerated()), id:\.element.id) { index, item in
+                            GeometryReader { geometry in
+                                CardUI(learnerCard: item)
+                                //Text("\(geometry.frame(in: .global).minY)")
+                                    .offset(y: max(0, 100 - geometry.frame(in: .global).minY))
+                                    .onTapGesture {
+                                        withAnimation(.spring()) {
+                                            if selectedIndex == index {
+                                                selectedIndex = nil
+                                            } else {
+                                                selectedIndex = index
+                                            }
+                                        }
                                     }
-                                }
+                                    .zIndex(selectedIndex == index ? 1 : 0)
                             }
-                                .zIndex(selectedIndex == index ? 1 : 0)
+                            .frame(height: 200)
+                        }
                     }
                 }
-            }
-            .navigationTitle("러너 카드")
-            .onAppear {
-                if Data.isEmpty {
-                    modelContext.insert(cardData(id: UUID(), name: "조영민", nickName: "Owen", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가","진진가"]))
-                    modelContext.insert(cardData(id: UUID(), name: "백지훈", nickName: "John", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가","진진가"]))
-                    modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Gani", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가","진진가"]))
+                .navigationTitle("러너 카드")
+                .onAppear {
+                    if Data.isEmpty {
+                        modelContext.insert(cardData(id: UUID(), name: "조영민", nickName: "Owen", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가11","진진가1"]))
+                        modelContext.insert(cardData(id: UUID(), name: "백지훈", nickName: "John", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가22","진진가2"]))
+                        modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Gani", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
+                    }
                 }
+
+            }
+        }
+        .onAppear {
+            if Data.isEmpty {
+                modelContext.insert(cardData(id: UUID(), name: "조영민", nickName: "Owen", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가11","진진가1"]))
+                modelContext.insert(cardData(id: UUID(), name: "백지훈", nickName: "John", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가22","진진가2"]))
+                modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Gani", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
             }
         }
     }
@@ -91,4 +79,5 @@ struct LearnerCardView: View {
 
 #Preview {
     LearnerCardView()
+        .modelContainer(for: cardData.self, inMemory: true)
 }
