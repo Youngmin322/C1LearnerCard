@@ -42,16 +42,28 @@ struct ProfileCardView: View {
                 }
                 .padding(.horizontal)
                 VStack(spacing: 0) {
-                    HStack(spacing: 30) {
+                    HStack(alignment: .center, spacing: 30) {
+                        Text("이름")
+                            .frame(width: 60, alignment: .leading)
+                        
+                        TextField("필수 사항", text: $name)
+                    }
+                    
+                    Divider()
+                        .padding(.horizontal, -6)
+                        .padding(10)
+                    
+                    HStack(alignment: .center, spacing: 30) {
                         Text("닉네임")
+                            .frame(width: 60, alignment: .leading)
                         
                         TextField("필수 사항", text: $nickName)
                     }
-                    .padding()
-                    .background(Color(uiColor: .secondarySystemBackground))
-                    .cornerRadius(100)
-                    .padding(.horizontal)
                 }
+                .padding()
+                .background(Color(uiColor: .secondarySystemBackground))
+                .cornerRadius(20)
+                .padding(.horizontal)
             }
         }
     }
