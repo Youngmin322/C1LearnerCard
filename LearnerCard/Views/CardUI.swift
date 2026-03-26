@@ -55,7 +55,7 @@ struct CardUI: View {
             Divider()
             
             VStack(alignment: .leading, spacing: 4) {
-                Text("진진가")
+                Text("무례 발언")
                     .font(.subheadline)
                     .foregroundColor(.gray)
                 
@@ -68,9 +68,11 @@ struct CardUI: View {
         }
         .padding()
         .frame(width: 350, height: 190)
-        .background(Color.white)
-        .cornerRadius(12)
-        .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 2)
+        .glassEffect(.regular, in: .rect(cornerRadius: 20))
         .padding()
     }
+}
+
+#Preview {
+    CardUI(learnerCard: cardData(name: "조영민", nickName: "Owen", session: "오전", profileImageURL: "", phone: "000000", descriptions: [""]))
 }
