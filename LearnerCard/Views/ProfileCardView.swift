@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileCardView: View {
     var searchText: String = ""
-    @State var isEditing = true
+    @State var isEditing = false
     @State var name = ""
     @State var nickName = ""
     @State var phoneNumber = ""
@@ -73,7 +73,7 @@ struct ProfileCardView: View {
                 .cornerRadius(20)
                 .padding(.horizontal)
                 
-                Text("사용자의 이름, 닉네임은 Apple Developer Academy @ POSTECH\n러너 카드를 추가하는 데 사용됩니다. 이 정보는 암호화는 안 되고 그냥 저장되며, 사용자의 모든 기기에서 사용할 수 없습니다. Learner Card 및 관리자 권한으로 카드 세부사항을 관리할 수 있습니다.")
+                Text("사용자의 이름, 닉네임은 Apple Developer Academy @ POSTECH\n러너 카드를 추가하는 데 사용됩니다. 이 정보는 암호화는 안 되고 그냥 저장되며, 사용자의 모든 기기에서 사용할 수 없습니다.")
                     .font(.caption)
                     .foregroundStyle(.gray)
                     .padding(.horizontal)
@@ -86,17 +86,17 @@ struct ProfileCardView: View {
                     Text("계속")
                         .font(.body)
                         .bold()
-                        .frame(maxWidth: .infinity, maxHeight: 35)
+                        .frame(maxWidth: .infinity, maxHeight: 30)
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(name.isEmpty || nickName.isEmpty ? .gray : .blue)
                 .disabled(name.isEmpty || nickName.isEmpty)
-                .padding(.horizontal)
+                .padding(.horizontal, 40)
             }
         }
     }
 }
 
 #Preview {
-    ProfileCardView()
+    ContentView()
 }
