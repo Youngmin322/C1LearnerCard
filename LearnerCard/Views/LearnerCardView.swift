@@ -40,7 +40,7 @@ struct LearnerCardView: View {
                             ForEach(Array(filteredCardData.enumerated()), id:\.element.id) { index, item in
                                 GeometryReader { geo in
                                     let minY = geo.frame(in: .global).minY
-                                    let offsetY = selectedIndex == nil ? max(0, 100 - minY) : (selectedIndex == index ?  175 - minY : screen.size.height * 1.0)
+                                    let offsetY = selectedIndex == nil ? max(0, 100 - minY) : (selectedIndex == index ?  175 - minY : screen.size.height * 7.0)
                                     
                                     CardUI(learnerCard: item)
                                         .frame(maxWidth: .infinity, alignment: .center)
