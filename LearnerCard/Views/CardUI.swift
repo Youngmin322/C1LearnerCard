@@ -69,6 +69,7 @@ struct CardUI: View {
         .padding()
         .frame(width: 350, height: 190)
         .glassEffect(.regular, in: .rect(cornerRadius: 20))
+        .contentShape(Rectangle())
         .padding()
     }
 }
