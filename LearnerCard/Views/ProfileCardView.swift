@@ -10,10 +10,11 @@ import SwiftData
 
 struct ProfileCardView: View {
     var searchText: String = ""
-    @State var isEditing = false
+    @State var isEditing = true
     @State var name = ""
     @State var nickName = ""
     @State var phoneNumber = ""
+    @State var session = "오전"
     
     @Query private var myCards: [cardData]
     
@@ -81,11 +82,30 @@ struct ProfileCardView: View {
                             TextField("", text: $nickName, prompt: Text("필수 사항").fontWeight(.regular))
                                 .bold()
                         }
+                        
+                        Divider()
+                            .padding(.horizontal, -6)
+                            .padding(10)
+                        
+                        HStack(alignment: .center, spacing: 30) {
+                            Text("세션")
+                                .bold()
+                                .frame(width: 60, alignment: .leading)
+                            
+                            Picker("", selection: $session) {
+                                Text("오전").tag("오전")
+                                Text("오후").tag("오후")
+                            }
+                            .pickerStyle(.menu)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                     }
                     .padding()
                     .background(Color(uiColor: .secondarySystemBackground))
                     .cornerRadius(20)
                     .padding(.horizontal)
+                    
+                    
                     
                     Text("사용자의 이름, 닉네임은 Apple Developer Academy @ POSTECH\n러너 카드를 추가하는 데 사용됩니다. 이 정보는 암호화는 안 되고 그냥 저장되며, 사용자의 모든 기기에서 사용할 수 없습니다.")
                         .font(.caption)
