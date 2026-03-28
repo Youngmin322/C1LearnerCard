@@ -12,14 +12,14 @@ struct LearnerCardView: View {
     
     @State var selectedIndex: Int? = nil
     @Environment(\.modelContext) private var modelContext
-    @Query private var Data: [cardData]
+    @Query private var cards: [Card]
     var searchText: String = ""
     
-    private var filteredCardData: [cardData] {
+    private var filteredCardData: [Card] {
         if searchText.isEmpty {
-            return Data
+            return cards
         } else {
-            return Data.filter { CD in
+            return cards.filter { CD in
                 CD.nickName.localizedCaseInsensitiveContains(searchText)
             }
         }
@@ -27,7 +27,7 @@ struct LearnerCardView: View {
     
     var body: some View {
         NavigationStack {
-            if Data.isEmpty {
+            if cards.isEmpty {
                 VStack {
                     Text("아직 러너카드가 없어요! \n 러너를 만나서 교환해보세요!")
                         .foregroundColor(.gray)
@@ -42,7 +42,7 @@ struct LearnerCardView: View {
                                     let minY = geo.frame(in: .global).minY
                                     let offsetY = selectedIndex == nil ? max(0, 100 - minY) : (selectedIndex == index ?  175 - minY : screen.size.height * 7.0)
                                     
-                                    CardUI(learnerCard: item)
+                                    CardView(learnerCard: item)
                                         .frame(maxWidth: .infinity, alignment: .center)
                                         .offset(y: offsetY)
                                         .onTapGesture {
@@ -88,7 +88,7 @@ struct LearnerCardView: View {
 
 #Preview {
     LearnerCardView()
-        .modelContainer(for: cardData.self, inMemory: true)
+        .modelContainer(for: Card.self, inMemory: true)
 }
 
 

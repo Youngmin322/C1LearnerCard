@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class cardData: Identifiable {
+final class Card: Identifiable {
     var id = UUID()
     var name: String
     var nickName: String

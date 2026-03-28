@@ -1,5 +1,5 @@
 //
-//  CardUI.swift
+//  CardView.swift
 //  LearnerCard
 //
 //  Created by Youngmin Cho on 3/22/26.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct CardUI: View {
-    var learnerCard: cardData
+struct CardView: View {
+    var learnerCard: Card
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -75,5 +75,5 @@ struct CardUI: View {
 }
 
 #Preview {
-    CardUI(learnerCard: cardData(name: "조영민", nickName: "Owen", session: "오전", profileImageURL: "", phone: "000000", descriptions: [""], isMine: true))
+    CardView(learnerCard: Card(name: "조영민", nickName: "Owen", session: "오전", profileImageURL: "", phone: "000000", descriptions: [""], isMine: true))
 }

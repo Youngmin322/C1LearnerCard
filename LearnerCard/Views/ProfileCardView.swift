@@ -16,13 +16,13 @@ struct ProfileCardView: View {
     @State var phoneNumber = ""
     @State var session = "오전"
     
-    @Query private var myCards: [cardData]
+    @Query private var myCards: [Card]
     
     var body: some View {
         NavigationStack {
             VStack {
                 if let myCard = myCards.first {
-                    CardUI(learnerCard: myCard)
+                    CardView(learnerCard: myCard)
                     Spacer()
                 } else {
                     Text("아직 내 카드가 없어요! \n 카드를 만들어 보세요!")
@@ -132,6 +132,6 @@ struct ProfileCardView: View {
 
 #Preview {
     ProfileCardView()
-        .modelContainer(for: cardData.self, inMemory: true)
+        .modelContainer(for: Card.self, inMemory: true)
 }
 

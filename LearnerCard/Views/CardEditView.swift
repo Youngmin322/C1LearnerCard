@@ -41,7 +41,7 @@ struct CardEditView: View {
             Spacer()
             
             Button {
-                modelContext.insert(cardData(name: name, nickName: nickName, session: session, profileImageURL: "", phone: "", descriptions: [descriptions], isMine: true))
+                modelContext.insert(Card(name: name, nickName: nickName, session: session, profileImageURL: "", phone: "", descriptions: [descriptions], isMine: true))
                 isEditing = false
             } label: {
                 Text("완료")
