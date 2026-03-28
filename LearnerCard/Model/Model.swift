@@ -19,6 +19,8 @@ final class cardData: Identifiable {
     var phone: String
     var descriptions: [String]
     
+    var isMine: Bool
+    
     init(
         id: UUID = UUID(),
         name: String,
@@ -27,7 +29,9 @@ final class cardData: Identifiable {
         profileImageURL: String?,
         
         phone: String,
-        descriptions: [String]
+        descriptions: [String],
+        
+        isMine: Bool
     ) {
         self.name = name
         self.nickName = nickName
@@ -35,5 +39,6 @@ final class cardData: Identifiable {
         self.profileImageURL = profileImageURL
         self.phone = phone
         self.descriptions = descriptions
+        self.isMine = isMine
     }
 }
