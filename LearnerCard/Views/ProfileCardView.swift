@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ProfileCardView: View {
     var searchText: String = ""
@@ -14,10 +15,18 @@ struct ProfileCardView: View {
     @State var nickName = ""
     @State var phoneNumber = ""
     
+    @Query private var myCards: [cardData]
+    
     var body: some View {
         NavigationStack {
             VStack {
-                CardUI(learnerCard: cardData(name: "ㅇㅇ", nickName: "ㅇㅇ", session: "ㅇㅇ", profileImageURL: "ㅇㅇ", phone: "ㅇㅇ", descriptions: ["ㅇㅇ"]))
+                if let myCard = myCards.first {
+                    CardUI(learnerCard: myCard)
+                } else {
+                    Text("아직 러너카드가 없어요! \n 러너를 만나서 교환해보세요!")
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.center)
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -81,7 +90,7 @@ struct ProfileCardView: View {
                         
                         Spacer()
                         
-                        NavigationLink(destination: CardEditView( isEditing: $isEditing)) {
+                        NavigationLink(destination: CardEditView(isEditing: $isEditing, name: name, nickName: nickName)) {
                             Text("계속")
                                 .font(.body)
                                 .bold()

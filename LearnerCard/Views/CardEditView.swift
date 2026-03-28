@@ -6,12 +6,19 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CardEditView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) private var modelContext
+    
     @State var descriptions = ""
     @State var session = ""
+    
     @Binding var isEditing: Bool
+    
+    let name: String
+    let nickName: String
     
     var body: some View {
         VStack(alignment: .trailing) {
@@ -34,6 +41,7 @@ struct CardEditView: View {
             Spacer()
             
             Button {
+                modelContext.insert(cardData(name: name, nickName: nickName, session: "", profileImageURL: "", phone: "", descriptions: [""]))
                 isEditing = false
             } label: {
                 Text("완료")
