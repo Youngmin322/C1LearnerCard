@@ -80,7 +80,7 @@ struct LearnerCardView: View {
                 modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Ganni", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
                 modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Ganni", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
                 modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Ganni", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
-                modelContext.insert(cardData(id: UUID(), name: "이치훈", nickName: "Gosan", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["옵셔널 비유 때 유대인 족쇄로 비유함"]))
+                modelContext.insert(cardData(id: UUID(), name: "이치훈", nickName: "Gosan", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: [""]))
             }
         }
     }

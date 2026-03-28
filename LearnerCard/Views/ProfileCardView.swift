@@ -81,7 +81,7 @@ struct ProfileCardView: View {
                         
                         Spacer()
                         
-                        NavigationLink(destination: CardEditView()) {
+                        NavigationLink(destination: CardEditView( isEditing: $isEditing)) {
                             Text("계속")
                                 .font(.body)
                                 .bold()
