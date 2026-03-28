@@ -10,7 +10,7 @@ import SwiftData
 
 struct ProfileCardView: View {
     var searchText: String = ""
-    @State var isEditing = true
+    @State var isEditing = false
     @State var name = ""
     @State var nickName = ""
     @State var phoneNumber = ""
