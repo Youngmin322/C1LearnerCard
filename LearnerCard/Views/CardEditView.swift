@@ -13,12 +13,12 @@ struct CardEditView: View {
     @Environment(\.modelContext) private var modelContext
     
     @State var descriptions = ""
-    @State var session = ""
     
     @Binding var isEditing: Bool
     
     let name: String
     let nickName: String
+    let session: String
     
     var body: some View {
         VStack(alignment: .trailing) {
@@ -41,7 +41,7 @@ struct CardEditView: View {
             Spacer()
             
             Button {
-                modelContext.insert(cardData(name: name, nickName: nickName, session: "", profileImageURL: "", phone: "", descriptions: [""], isMine: true))
+                modelContext.insert(cardData(name: name, nickName: nickName, session: session, profileImageURL: "", phone: "", descriptions: [descriptions], isMine: true))
                 isEditing = false
             } label: {
                 Text("완료")
