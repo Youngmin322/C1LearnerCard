@@ -10,14 +10,11 @@ import SwiftData
 
 struct CardFormView: View {
     
-    var searchText: String = ""
     @Binding var isEditing: Bool
     @State private var name = ""
     @State private var nickName = ""
     @State private var phoneNumber = ""
     @State private var session = "오전"
-    
-    @Query private var myCards: [Card]
     
     var body: some View {
         VStack(spacing: 0) {
