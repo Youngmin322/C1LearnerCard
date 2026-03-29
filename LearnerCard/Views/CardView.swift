@@ -19,7 +19,7 @@ struct CardView: View {
                         Text(String(learnerCard.nickName.prefix(1)))
                             .foregroundColor(.white)
                             .bold()
-                        )
+                    )
                     .foregroundColor(.blue)
                 
                 VStack(alignment: .leading) {

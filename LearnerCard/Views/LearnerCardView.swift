@@ -19,8 +19,8 @@ struct LearnerCardView: View {
         if searchText.isEmpty {
             return cards
         } else {
-            return cards.filter { CD in
-                CD.nickName.localizedCaseInsensitiveContains(searchText)
+            return cards.filter { card in
+                card.nickName.localizedCaseInsensitiveContains(searchText)
             }
         }
     }
@@ -61,28 +61,9 @@ struct LearnerCardView: View {
                         }
                     }
                     .navigationTitle("러너 카드")
-//                    .onAppear {
-//                        if Data.isEmpty {
-//                            modelContext.insert(cardData(id: UUID(), name: "조영민", nickName: "Owen", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가11","진진가1"]))
-//                            modelContext.insert(cardData(id: UUID(), name: "백지훈", nickName: "John", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가22","진진가2"]))
-//                            modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Gani", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
-//                        }
-//                    }
                 }
             }
         }
-//        .onAppear {
-//            if Data.isEmpty {
-//                modelContext.insert(cardData(id: UUID(), name: "조영민", nickName: "Owen", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가11","진진가1"]))
-//                modelContext.insert(cardData(id: UUID(), name: "백지훈", nickName: "John", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가22","진진가2"]))
-//                modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Ganni", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
-//                modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Ganni", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
-//                modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Ganni", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
-//                modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Ganni", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
-//                modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Ganni", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
-//                modelContext.insert(cardData(id: UUID(), name: "이치훈", nickName: "Gosan", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: [""]))
-//            }
-//        }
     }
 }
 

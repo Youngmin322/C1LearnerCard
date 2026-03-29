@@ -15,10 +15,8 @@ final class Card: Identifiable {
     var nickName: String
     var session: String
     var profileImageURL: String?
-    
     var phone: String
     var descriptions: [String]
-    
     var isMine: Bool
     
     init(
@@ -27,10 +25,8 @@ final class Card: Identifiable {
         nickName: String,
         session: String,
         profileImageURL: String?,
-        
         phone: String,
         descriptions: [String],
-        
         isMine: Bool
     ) {
         self.name = name

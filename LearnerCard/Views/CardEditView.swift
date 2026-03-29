@@ -11,9 +11,7 @@ import SwiftData
 struct CardEditView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
-    
     @State var descriptions = ""
-    
     @Binding var isEditing: Bool
     
     let name: String
@@ -54,7 +52,5 @@ struct CardEditView: View {
             
         }
         .padding(.horizontal)
-    
     }
 }
-
