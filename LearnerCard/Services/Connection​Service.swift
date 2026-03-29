@@ -19,7 +19,12 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-                    
+        do {
+            let dto = try JSONDecoder().decode(CardDTO.self, from: data)
+            let card = Card(from: dto)
+        } catch {
+            print(error)
+        }
     }
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
