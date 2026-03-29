@@ -11,6 +11,9 @@ import SwiftData
 struct ProfileCardView: View {
     @State private var isEditing = false
     @Query private var myCards: [Card]
+    @State private var connectionService: ConnectionService?
+    
+    @Environment(\.modelContext) private var modelContext
     
     var body: some View {
         VStack {
@@ -38,6 +41,19 @@ struct ProfileCardView: View {
             }
         }
         .navigationTitle("내 카드")
+        .onAppear {
+            if let myCard = myCards.first {
+                let service = ConnectionService(displayName: myCard.nickName)
+                service.onCardReceived = { card in
+                    modelContext.insert(card)
+                }
+                service.startService()
+                connectionService = service
+            }
+        }
+        .onDisappear {
+            connectionService?.stopServices()
+        }
         .sheet(isPresented: $isEditing) {
             NavigationStack {
                 VStack(alignment: .leading, spacing: 4) {

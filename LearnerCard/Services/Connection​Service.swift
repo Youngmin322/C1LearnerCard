@@ -10,6 +10,8 @@ import NearbyInteraction
 import MultipeerConnectivity
 
 class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
+    var onCardReceived: ((Card) -> Void)?
+    
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         invitationHandler(true, session)
     }
@@ -22,6 +24,9 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         do {
             let dto = try JSONDecoder().decode(CardDTO.self, from: data)
             let card = Card(from: dto)
+            
+            onCardReceived?(card)
+            
         } catch {
             print(error)
         }
@@ -55,8 +60,8 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
     init(displayName: String) {
         myPeerID = MCPeerID(displayName: displayName)
         session = MCSession(peer: myPeerID)
-        nearbyServiceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: "learner-card")
-        nearbyServiceBrowser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: "learner​-card")
+        nearbyServiceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: "learnerCard")
+        nearbyServiceBrowser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: "learnerCard")
         
         super.init()
         
@@ -85,4 +90,6 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
             print(error)
         }
     }
+    
+
 }
