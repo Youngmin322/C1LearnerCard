@@ -26,7 +26,7 @@ struct LearnerCardView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        Group {
             if cards.isEmpty {
                 VStack {
                     Text("아직 러너카드가 없어요! \n 러너를 만나서 교환해보세요!")
@@ -60,10 +60,10 @@ struct LearnerCardView: View {
                             }
                         }
                     }
-                    .navigationTitle("러너 카드")
                 }
             }
         }
+        .navigationTitle("러너 카드")
     }
 }
 
@@ -71,6 +71,4 @@ struct LearnerCardView: View {
     LearnerCardView()
         .modelContainer(for: Card.self, inMemory: true)
 }
-
-
 

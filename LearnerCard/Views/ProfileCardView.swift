@@ -13,50 +13,48 @@ struct ProfileCardView: View {
     @Query private var myCards: [Card]
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                if let myCard = myCards.first {
-                    CardView(learnerCard: myCard)
-                    Spacer()
-                } else {
-                    Text("아직 내 카드가 없어요! \n 카드를 만들어 보세요!")
+        VStack {
+            if let myCard = myCards.first {
+                CardView(learnerCard: myCard)
+                Spacer()
+            } else {
+                Text("아직 내 카드가 없어요! \n 카드를 만들어 보세요!")
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.center)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                
+                Button(action: { isEditing = true }) {
+                    if myCards.isEmpty {
+                        Image(systemName: "plus")
+                    } else {
+                        Image(systemName: "pencil")
+                    }
+                }
+            }
+        }
+        .navigationTitle("내 카드")
+        .sheet(isPresented: $isEditing) {
+            NavigationStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("카드 세부 사항")
+                        .font(.title)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Text("카드 정보를 확인하고\n작성을 완료하세요.")
                         .foregroundColor(.gray)
-                        .multilineTextAlignment(.center)
+                        .font(.title2)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    
-                    Button(action: { isEditing = true }) {
-                        if myCards.isEmpty {
-                            Image(systemName: "plus")
-                        } else {
-                            Image(systemName: "pencil")
-                        }
-                    }
-                }
-            }
-            .navigationTitle("내 카드")
-            .sheet(isPresented: $isEditing) {
-                NavigationStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("카드 세부 사항")
-                            .font(.title)
-                            .bold()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        Text("카드 정보를 확인하고\n작성을 완료하세요.")
-                            .foregroundColor(.gray)
-                            .font(.title2)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    .padding(.horizontal)
-                    .padding(.top, 50)
-                    
-                    CardFormView( isEditing: $isEditing)
-                }
+                .padding(.horizontal)
+                .padding(.top, 50)
+                
+                CardFormView( isEditing: $isEditing)
             }
         }
     }
