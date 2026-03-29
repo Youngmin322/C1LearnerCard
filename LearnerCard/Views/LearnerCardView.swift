@@ -10,7 +10,7 @@ import SwiftData
 
 struct LearnerCardView: View {
     
-    @State var selectedIndex: Int? = nil
+    @State private var selectedIndex: Int? = nil
     @Environment(\.modelContext) private var modelContext
     @Query private var cards: [Card]
     var searchText: String = ""

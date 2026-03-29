@@ -12,10 +12,10 @@ struct CardFormView: View {
     
     var searchText: String = ""
     @Binding var isEditing: Bool
-    @State var name = ""
-    @State var nickName = ""
-    @State var phoneNumber = ""
-    @State var session = "오전"
+    @State private var name = ""
+    @State private var nickName = ""
+    @State private var phoneNumber = ""
+    @State private var session = "오전"
     
     @Query private var myCards: [Card]
     

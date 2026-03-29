@@ -9,9 +9,9 @@ import SwiftUI
 import SwiftData
 
 struct CardEditView: View {
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
-    @State var descriptions = ""
+    @State private var descriptions = ""
     @Binding var isEditing: Bool
     
     let name: String

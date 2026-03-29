@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct ProfileCardView: View {
-    @State var isEditing = false
+    @State private var isEditing = false
     @Query private var myCards: [Card]
     
     var body: some View {
