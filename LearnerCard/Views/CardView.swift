@@ -48,7 +48,7 @@ struct CardView: View {
                 
                 Spacer()
                 
-                Text(learnerCard.phone)
+                Text(learnerCard.phone ?? "없음")
                     .font(.subheadline)
             }
             
@@ -75,5 +75,5 @@ struct CardView: View {
 }
 
 #Preview {
-    CardView(learnerCard: Card(name: "조영민", nickName: "Owen", session: "오전", profileImageURL: "", phone: "000000", descriptions: [""], isMine: true))
+    CardView(learnerCard: Card(name: "조영민", nickName: "Owen", session: "오전", profileImageURL: nil, phone: nil, descriptions: [""], isMine: true))
 }
