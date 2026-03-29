@@ -37,4 +37,28 @@ final class Card: Identifiable {
         self.descriptions = descriptions
         self.isMine = isMine
     }
+    
+    init(from dto: CardDTO) {
+        self.name = dto.name
+        self.nickName = dto.nickName
+        self.session = dto.session
+        self.profileImageURL = dto.profileImageURL
+        self.phone = dto.phone
+        self.descriptions = dto.descriptions
+        self.isMine = false
+    }
+    
+    func toDTO() -> CardDTO {
+        return CardDTO(name: self.name, nickName: self.nickName, session: self.session, profileImageURL: self.profileImageURL, phone: self.phone, descriptions: self.descriptions)
+    }
+}
+
+struct CardDTO: Codable {
+    var id = UUID()
+    var name: String
+    var nickName: String
+    var session: String
+    var profileImageURL: String?
+    var phone: String?
+    var descriptions: [String]
 }

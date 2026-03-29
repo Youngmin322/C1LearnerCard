@@ -69,4 +69,15 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         nearbyServiceBrowser.stopBrowsingForPeers()
         nearbyServiceAdvertiser.stopAdvertisingPeer()
     }
+    
+    func sendCard(_ card: Card) {
+        let dto = card.toDTO()
+        
+        do {
+            let data = try JSONEncoder().encode(dto)
+            try session.send(data, toPeers: session.connectedPeers, with: .reliable)
+        } catch {
+            print(error)
+        }
+    }
 }
