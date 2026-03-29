@@ -11,7 +11,7 @@ import MultipeerConnectivity
 
 class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
-        
+        invitationHandler(true, session)
     }
     
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
@@ -35,7 +35,7 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
-        
+        browser.invitePeer(peerID, to: session, withContext: nil, timeout: 30)
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
@@ -58,5 +58,15 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         session.delegate = self
         nearbyServiceAdvertiser.delegate = self
         nearbyServiceBrowser.delegate = self
+    }
+    
+    func startService() {
+        nearbyServiceAdvertiser.startAdvertisingPeer()
+        nearbyServiceBrowser.startBrowsingForPeers()
+    }
+    
+    func stopServices() {
+        nearbyServiceBrowser.stopBrowsingForPeers()
+        nearbyServiceAdvertiser.stopAdvertisingPeer()
     }
 }
