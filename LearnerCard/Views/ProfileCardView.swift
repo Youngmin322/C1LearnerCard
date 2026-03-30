@@ -12,13 +12,22 @@ struct ProfileCardView: View {
     @State private var isEditing = false
     @Query private var myCards: [Card]
     @State private var connectionService: ConnectionService?
+    @State private var showAlert = false
+    @State private var showExchange = false
     
     @Environment(\.modelContext) private var modelContext
     
     var body: some View {
         VStack {
             if let myCard = myCards.first {
-                CardView(learnerCard: myCard)
+                Button {
+                    showExchange = true
+                } label: {
+                    CardView(learnerCard: myCard)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+
                 Spacer()
             } else {
                 Text("아직 내 카드가 없어요! \n 카드를 만들어 보세요!")
@@ -41,6 +50,18 @@ struct ProfileCardView: View {
             }
         }
         .navigationTitle("내 카드")
+        .alert("교환", isPresented: $showAlert) {
+            Button("교환") {
+                if let myCard = myCards.first {
+                    connectionService?.sendCard(myCard)
+                }
+            }
+            Button("취소", role: .cancel) {
+                
+            }
+        } message: {
+             Text("카드를 교환할까요?")
+        }
         .onAppear {
             if let myCard = myCards.first {
                 let service = ConnectionService(displayName: myCard.nickName)
@@ -71,6 +92,15 @@ struct ProfileCardView: View {
                 .padding(.top, 50)
                 
                 CardFormView( isEditing: $isEditing)
+            }
+        }
+        .sheet(isPresented: $showExchange) {
+            if myCards.first != nil {
+                CardExchangeView()
+                    .presentationDetents([.medium, .large])
+            } else {
+                Text("내 카드가 없어 교환을 시작할 수 없어요.")
+                    .padding()
             }
         }
     }

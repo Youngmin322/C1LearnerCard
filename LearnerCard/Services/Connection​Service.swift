@@ -9,6 +9,10 @@ import SwiftUI
 import NearbyInteraction
 import MultipeerConnectivity
 
+var onPeerConnected: (() -> Void)? = {
+    print("연결 됨")
+}
+
 class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
     var onCardReceived: ((Card) -> Void)?
     
@@ -17,7 +21,9 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
     }
     
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
-        
+        if state == .connected {
+            onPeerConnected?()
+        }
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {

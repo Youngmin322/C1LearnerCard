@@ -8,3 +8,7 @@
 import Foundation
 import NearbyInteraction
 import MultipeerConnectivity
+
+struct Nearbysession {
+    
+}
