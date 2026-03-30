@@ -29,6 +29,7 @@ final class Card: Identifiable {
         descriptions: [String],
         isMine: Bool
     ) {
+        self.id = id
         self.name = name
         self.nickName = nickName
         self.session = session

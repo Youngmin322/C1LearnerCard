@@ -60,7 +60,7 @@ struct CardView: View {
                     .foregroundColor(.gray)
                 
                 ForEach(learnerCard.descriptions, id: \.self) { description in
-                    Text("•\(description)")
+                    Text("\(description)")
                         .font(.subheadline)
                         .padding(.horizontal)
                 }

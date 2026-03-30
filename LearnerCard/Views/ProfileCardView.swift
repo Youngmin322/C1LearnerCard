@@ -10,12 +10,9 @@ import SwiftData
 
 struct ProfileCardView: View {
     @State private var isEditing = false
-    @Query private var myCards: [Card]
-    @State private var connectionService: ConnectionService?
-    @State private var showAlert = false
     @State private var showExchange = false
-    
-    @Environment(\.modelContext) private var modelContext
+    @Query(filter: #Predicate<Card> { $0.isMine == true })
+    private var myCards: [Card]
     
     var body: some View {
         VStack {
@@ -50,31 +47,6 @@ struct ProfileCardView: View {
             }
         }
         .navigationTitle("내 카드")
-        .alert("교환", isPresented: $showAlert) {
-            Button("교환") {
-                if let myCard = myCards.first {
-                    connectionService?.sendCard(myCard)
-                }
-            }
-            Button("취소", role: .cancel) {
-                
-            }
-        } message: {
-             Text("카드를 교환할까요?")
-        }
-        .onAppear {
-            if let myCard = myCards.first {
-                let service = ConnectionService(displayName: myCard.nickName)
-                service.onCardReceived = { card in
-                    modelContext.insert(card)
-                }
-                service.startService()
-                connectionService = service
-            }
-        }
-        .onDisappear {
-            connectionService?.stopServices()
-        }
         .sheet(isPresented: $isEditing) {
             NavigationStack {
                 VStack(alignment: .leading, spacing: 4) {
@@ -95,8 +67,8 @@ struct ProfileCardView: View {
             }
         }
         .sheet(isPresented: $showExchange) {
-            if myCards.first != nil {
-                CardExchangeView()
+            if let myCard = myCards.first {
+                CardExchangeView(myCard: myCard)
                     .presentationDetents([.medium, .large])
             } else {
                 Text("내 카드가 없어 교환을 시작할 수 없어요.")

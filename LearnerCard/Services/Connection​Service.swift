@@ -11,19 +11,23 @@ import MultipeerConnectivity
 
 class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
     
-    var onPeerConnected: (() -> Void)? = {
-        print("연결 됨")
-    }
+    var onPeerConnected: (() -> Void)?
     
     var onCardReceived: ((Card) -> Void)?
     
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
+        print("초대 받음: \(peerID.displayName)")
         invitationHandler(true, session)
     }
     
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
+        print("상태 변경: \(peerID.displayName) - \(state.rawValue)")
         if state == .connected {
-            onPeerConnected?()
+            nearbyServiceBrowser.stopBrowsingForPeers()
+            nearbyServiceAdvertiser.stopAdvertisingPeer()
+            DispatchQueue.main.async {
+                self.onPeerConnected?()
+            }
         }
     }
     
@@ -31,7 +35,9 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         do {
             let dto = try JSONDecoder().decode(CardDTO.self, from: data)
             let card = Card(from: dto)
-            onCardReceived?(card)
+            DispatchQueue.main.async {
+                self.onCardReceived?(card)
+            }
         } catch {
             print(error)
         }
@@ -50,6 +56,7 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
+        print("피어 발견: \(peerID.displayName)")
         browser.invitePeer(peerID, to: session, withContext: nil, timeout: 30)
     }
     
@@ -65,8 +72,8 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
     init(displayName: String) {
         myPeerID = MCPeerID(displayName: displayName)
         session = MCSession(peer: myPeerID)
-        nearbyServiceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: "learnerCard")
-        nearbyServiceBrowser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: "learnerCard")
+        nearbyServiceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: "learnercard")
+        nearbyServiceBrowser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: "learnercard")
         
         super.init()
         
@@ -76,6 +83,7 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
     }
     
     func startService() {
+        print("시작시작시작")
         nearbyServiceAdvertiser.startAdvertisingPeer()
         nearbyServiceBrowser.startBrowsingForPeers()
     }
