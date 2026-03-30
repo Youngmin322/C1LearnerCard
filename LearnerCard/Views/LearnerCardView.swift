@@ -10,24 +10,25 @@ import SwiftData
 
 struct LearnerCardView: View {
     
-    @State var selectedIndex: Int? = nil
-    @Environment(\.modelContext) private var modelContext
-    @Query private var Data: [cardData]
+    @State private var selectedIndex: Int? = nil
     var searchText: String = ""
     
-    private var filteredCardData: [cardData] {
+    @Query(filter: #Predicate<Card> { $0.isMine == false })
+    private var cards: [Card]
+    
+    private var filteredCards: [Card] {
         if searchText.isEmpty {
-            return Data
+            return cards
         } else {
-            return Data.filter { CD in
-                CD.nickName.localizedCaseInsensitiveContains(searchText)
+            return cards.filter { card in
+                card.nickName.localizedCaseInsensitiveContains(searchText)
             }
         }
     }
     
     var body: some View {
-        NavigationStack {
-            if Data.isEmpty {
+        Group {
+            if cards.isEmpty {
                 VStack {
                     Text("아직 러너카드가 없어요! \n 러너를 만나서 교환해보세요!")
                         .foregroundColor(.gray)
@@ -37,12 +38,12 @@ struct LearnerCardView: View {
                 GeometryReader { screen in
                     ScrollView {
                         VStack(spacing: 0) {
-                            ForEach(Array(filteredCardData.enumerated()), id:\.element.id) { index, item in
+                            ForEach(Array(filteredCards.enumerated()), id:\.element.id) { index, item in
                                 GeometryReader { geo in
                                     let minY = geo.frame(in: .global).minY
                                     let offsetY = selectedIndex == nil ? max(0, 100 - minY) : (selectedIndex == index ?  175 - minY : screen.size.height * 7.0)
                                     
-                                    CardUI(learnerCard: item)
+                                    CardView(learnerCard: item)
                                         .frame(maxWidth: .infinity, alignment: .center)
                                         .offset(y: offsetY)
                                         .onTapGesture {
@@ -60,36 +61,15 @@ struct LearnerCardView: View {
                             }
                         }
                     }
-                    .navigationTitle("러너 카드")
-//                    .onAppear {
-//                        if Data.isEmpty {
-//                            modelContext.insert(cardData(id: UUID(), name: "조영민", nickName: "Owen", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가11","진진가1"]))
-//                            modelContext.insert(cardData(id: UUID(), name: "백지훈", nickName: "John", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가22","진진가2"]))
-//                            modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Gani", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
-//                        }
-//                    }
                 }
             }
         }
-//        .onAppear {
-//            if Data.isEmpty {
-//                modelContext.insert(cardData(id: UUID(), name: "조영민", nickName: "Owen", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가11","진진가1"]))
-//                modelContext.insert(cardData(id: UUID(), name: "백지훈", nickName: "John", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가22","진진가2"]))
-//                modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Ganni", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
-//                modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Ganni", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
-//                modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Ganni", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
-//                modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Ganni", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
-//                modelContext.insert(cardData(id: UUID(), name: "김가은", nickName: "Ganni", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: ["진진가33","진진가3"]))
-//                modelContext.insert(cardData(id: UUID(), name: "이치훈", nickName: "Gosan", session: "오전", profileImageURL: "", phone: "010-1111-2222", descriptions: [""]))
-//            }
-//        }
+        .navigationTitle("러너 카드")
     }
 }
 
 #Preview {
     LearnerCardView()
-        .modelContainer(for: cardData.self, inMemory: true)
+        .modelContainer(for: Card.self, inMemory: true)
 }
-
-
 

@@ -12,7 +12,7 @@ import SwiftData
 struct LearnerCardApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            cardData.self,
+            Card.self,
         ])
         let modelConfiguration = ModelConfiguration(
             schema: schema,

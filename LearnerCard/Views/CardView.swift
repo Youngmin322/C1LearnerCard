@@ -1,5 +1,5 @@
 //
-//  CardUI.swift
+//  CardView.swift
 //  LearnerCard
 //
 //  Created by Youngmin Cho on 3/22/26.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct CardUI: View {
-    var learnerCard: cardData
+struct CardView: View {
+    var learnerCard: Card
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -19,7 +19,7 @@ struct CardUI: View {
                         Text(String(learnerCard.nickName.prefix(1)))
                             .foregroundColor(.white)
                             .bold()
-                        )
+                    )
                     .foregroundColor(.blue)
                 
                 VStack(alignment: .leading) {
@@ -48,19 +48,19 @@ struct CardUI: View {
                 
                 Spacer()
                 
-                Text(learnerCard.phone)
+                Text(learnerCard.phone ?? "없음")
                     .font(.subheadline)
             }
             
             Divider()
             
             VStack(alignment: .leading, spacing: 4) {
-                Text("무례 발언")
+                Text("추가 정보")
                     .font(.subheadline)
                     .foregroundColor(.gray)
                 
                 ForEach(learnerCard.descriptions, id: \.self) { description in
-                    Text("•\(description)")
+                    Text("\(description)")
                         .font(.subheadline)
                         .padding(.horizontal)
                 }
@@ -75,5 +75,5 @@ struct CardUI: View {
 }
 
 #Preview {
-    CardUI(learnerCard: cardData(name: "조영민", nickName: "Owen", session: "오전", profileImageURL: "", phone: "000000", descriptions: [""], isMine: true))
+    CardView(learnerCard: Card(name: "조영민", nickName: "Owen", session: "오전", profileImageURL: nil, phone: nil, descriptions: [""], isMine: true))
 }

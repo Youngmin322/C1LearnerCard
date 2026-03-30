@@ -9,11 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct CardEditView: View {
-    @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
-    
-    @State var descriptions = ""
-    
+    @State private var descriptions = ""
     @Binding var isEditing: Bool
     
     let name: String
@@ -41,7 +38,7 @@ struct CardEditView: View {
             Spacer()
             
             Button {
-                modelContext.insert(cardData(name: name, nickName: nickName, session: session, profileImageURL: "", phone: "", descriptions: [descriptions], isMine: true))
+                modelContext.insert(Card(name: name, nickName: nickName, session: session, profileImageURL: nil, phone: nil, descriptions: [descriptions], isMine: true))
                 isEditing = false
             } label: {
                 Text("완료")
@@ -54,7 +51,5 @@ struct CardEditView: View {
             
         }
         .padding(.horizontal)
-    
     }
 }
-

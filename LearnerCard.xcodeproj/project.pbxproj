@@ -10,9 +10,22 @@
 		1D681B1A2F6D14F700665160 /* LearnerCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LearnerCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		1D11850E2F7A5D0B0030ED05 /* Exceptions for "LearnerCard" folder in "LearnerCard" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 1D681B192F6D14F700665160 /* LearnerCard */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		1D681B1C2F6D14F700665160 /* LearnerCard */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				1D11850E2F7A5D0B0030ED05 /* Exceptions for "LearnerCard" folder in "LearnerCard" target */,
+			);
 			path = LearnerCard;
 			sourceTree = "<group>";
 		};
@@ -258,6 +271,8 @@
 				DEVELOPMENT_TEAM = 5R33532VPH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LearnerCard/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "주변 기기와 카드를 공유하기 위해 로컬 네트워크 접근이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -294,6 +309,8 @@
 				DEVELOPMENT_TEAM = 5R33532VPH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LearnerCard/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "주변 기기와 카드를 공유하기 위해 로컬 네트워크 접근이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
