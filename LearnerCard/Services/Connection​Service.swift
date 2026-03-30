@@ -14,6 +14,7 @@ var onPeerConnected: (() -> Void)? = {
 }
 
 class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
+    
     var onCardReceived: ((Card) -> Void)?
     
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
@@ -30,9 +31,7 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         do {
             let dto = try JSONDecoder().decode(CardDTO.self, from: data)
             let card = Card(from: dto)
-            
             onCardReceived?(card)
-            
         } catch {
             print(error)
         }
@@ -96,6 +95,4 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
             print(error)
         }
     }
-    
-
 }

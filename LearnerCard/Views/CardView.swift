@@ -55,7 +55,7 @@ struct CardView: View {
             Divider()
             
             VStack(alignment: .leading, spacing: 4) {
-                Text("무례 발언")
+                Text("추가 정보")
                     .font(.subheadline)
                     .foregroundColor(.gray)
                 
