@@ -24,7 +24,7 @@ struct ProfileCardView: View {
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-
+                
                 Spacer()
             } else {
                 Text("아직 내 카드가 없어요! \n 카드를 만들어 보세요!")
