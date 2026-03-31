@@ -11,8 +11,7 @@ import MultipeerConnectivity
 
 class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
     
-    var onPeerConnected: (() -> Void)?
-    
+    var onPeerConnected: ((String) -> Void)?
     var onCardReceived: ((Card) -> Void)?
     
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
@@ -26,7 +25,7 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
             nearbyServiceBrowser.stopBrowsingForPeers()
             nearbyServiceAdvertiser.stopAdvertisingPeer()
             DispatchQueue.main.async {
-                self.onPeerConnected?()
+                self.onPeerConnected?(peerID.displayName)
             }
         }
     }

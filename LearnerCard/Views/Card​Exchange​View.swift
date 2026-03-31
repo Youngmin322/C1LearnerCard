@@ -16,15 +16,25 @@ struct CardExchangeView: View {
     @State private var isConnected: Bool = false
     
     @State private var connectionService: ConnectionService?
+    @State private var yourName = ""
+    
     @Environment(\.modelContext) private var modelContext
     var myCard: Card
     
     @ViewBuilder
+    func getView(on: Bool) -> some View {
+        if on {
+            Text("aaa")
+        } else {
+            Color.clear
+        }
+    }
+    
     var body: some View {
         if isConnected {
             VStack {
                 Image(systemName: "person.crop.circle.badge.checkmark.fill")
-                Text("연결 되었습니다.")
+                Text("\(yourName)과 연결되었습니다.")
                 Button("교환") {
                     connectionService?.sendCard(myCard)
                 }
@@ -61,9 +71,10 @@ struct CardExchangeView: View {
             }
             .onAppear {
                 let service = ConnectionService(displayName: myCard.nickName)
-                service.onPeerConnected = {
+                service.onPeerConnected = { card in
                     DispatchQueue.main.async {
                         isConnected = true
+                        yourName = card
                     }
                 }
                 service.onCardReceived = { card in
