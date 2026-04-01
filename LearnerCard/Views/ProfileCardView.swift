@@ -13,7 +13,7 @@ struct ProfileCardView: View {
     @State private var showExchange = false
     @Query(filter: #Predicate<Card> { $0.isMine == true })
     private var myCards: [Card]
-    
+     
     var body: some View {
         VStack {
             if let myCard = myCards.first {
@@ -63,7 +63,7 @@ struct ProfileCardView: View {
                 .padding(.horizontal)
                 .padding(.top, 50)
                 
-                CardFormView( isEditing: $isEditing)
+                CardFormView(isEditing: $isEditing)
             }
         }
         .sheet(isPresented: $showExchange) {
@@ -82,4 +82,3 @@ struct ProfileCardView: View {
     ProfileCardView()
         .modelContainer(for: Card.self, inMemory: true)
 }
-
