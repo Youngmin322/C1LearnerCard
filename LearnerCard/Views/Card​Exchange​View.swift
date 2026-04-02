@@ -16,15 +16,19 @@ struct CardExchangeView: View {
     @State private var isConnected: Bool = false
     
     @State private var connectionService: ConnectionService?
+    @State private var yourName = ""
+    @State private var NearbySession: Nearbysession?
+    @State private var nearDistance: Float?
+    
     @Environment(\.modelContext) private var modelContext
     var myCard: Card
     
-    @ViewBuilder
     var body: some View {
         if isConnected {
             VStack {
                 Image(systemName: "person.crop.circle.badge.checkmark.fill")
-                Text("연결 되었습니다.")
+                Text("\(yourName)과 연결되었습니다.")
+                Text("\(String(format: "%.1f", nearDistance ?? 0))m 떨어져 있음")
                 Button("교환") {
                     connectionService?.sendCard(myCard)
                 }
@@ -60,10 +64,16 @@ struct CardExchangeView: View {
                 dotCount = (dotCount + 1) % 4
             }
             .onAppear {
+                let nearby = Nearbysession()
+                NearbySession = nearby
                 let service = ConnectionService(displayName: myCard.nickName)
-                service.onPeerConnected = {
+                service.onPeerConnected = { card in
                     DispatchQueue.main.async {
                         isConnected = true
+                        yourName = card
+                    }
+                    if let myToken = nearby.myToken {
+                        service.sendToken(myToken)
                     }
                 }
                 service.onCardReceived = { card in
@@ -73,6 +83,16 @@ struct CardExchangeView: View {
                 }
                 service.startService()
                 connectionService = service
+                
+                nearby.onDistanceUpdated = { distance in
+                    DispatchQueue.main.async {
+                        nearDistance = distance
+                    }
+                }
+                
+                service.onTokenReceived = { token in
+                    nearby.start(peerToken: token)
+                }
             }
         }
     }

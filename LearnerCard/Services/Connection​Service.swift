@@ -11,9 +11,9 @@ import MultipeerConnectivity
 
 class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDelegate, MCNearbyServiceAdvertiserDelegate {
     
-    var onPeerConnected: (() -> Void)?
-    
+    var onPeerConnected: ((String) -> Void)?
     var onCardReceived: ((Card) -> Void)?
+    var onTokenReceived: ((NIDiscoveryToken) -> Void)?
     
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         print("초대 받음: \(peerID.displayName)")
@@ -26,20 +26,26 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
             nearbyServiceBrowser.stopBrowsingForPeers()
             nearbyServiceAdvertiser.stopAdvertisingPeer()
             DispatchQueue.main.async {
-                self.onPeerConnected?()
+                self.onPeerConnected?(peerID.displayName)
             }
         }
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        do {
-            let dto = try JSONDecoder().decode(CardDTO.self, from: data)
-            let card = Card(from: dto)
+        if let token = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NIDiscoveryToken.self, from: data) {
             DispatchQueue.main.async {
-                self.onCardReceived?(card)
+                self.onTokenReceived?(token)
             }
-        } catch {
-            print(error)
+        } else {
+            do {
+                let dto = try JSONDecoder().decode(CardDTO.self, from: data)
+                let card = Card(from: dto)
+                DispatchQueue.main.async {
+                    self.onCardReceived?(card)
+                }
+            } catch {
+                print(error)
+            }
         }
     }
     
@@ -98,6 +104,15 @@ class ConnectionService: NSObject, MCSessionDelegate, MCNearbyServiceBrowserDele
         
         do {
             let data = try JSONEncoder().encode(dto)
+            try session.send(data, toPeers: session.connectedPeers, with: .reliable)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func sendToken(_ token: NIDiscoveryToken) {
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: token, requiringSecureCoding: true)
             try session.send(data, toPeers: session.connectedPeers, with: .reliable)
         } catch {
             print(error)

@@ -61,7 +61,7 @@ struct CardFormView: View {
         .cornerRadius(20)
         .padding(.horizontal)
         
-        Text("사용자의 이름, 닉네임은 Apple Developer Academy @ POSTECH\n러너 카드를 추가하는 데 사용됩니다. 이 정보는 암호화는 안 되고 그냥 저장되며, 사용자의 모든 기기에서 사용할 수 없습니다.")
+        Text("사용자의 이름, 닉네임은  Apple Developer Academy @ POSTECH\n러너 카드를 추가하는 데 사용됩니다. 이 정보는 암호화는 안 되고 그냥 저장되며, 저는 지금 졸립니다.")
             .font(.caption)
             .foregroundStyle(.gray)
             .padding(.horizontal)
@@ -80,4 +80,5 @@ struct CardFormView: View {
         .padding(.horizontal, 40)
     }
 }
+
 
