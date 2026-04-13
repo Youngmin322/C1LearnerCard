@@ -11,88 +11,87 @@ import MultipeerConnectivity
 import Combine
 
 struct CardExchangeView: View {
-    @State private var dotCount: Int = 0
-    @State private var dotTimer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
-    @State private var isConnected: Bool = false
-    
-    @State private var connectionService: ConnectionService?
-    @State private var yourName = ""
-    @State private var NearbySession: Nearbysession?
-    @State private var nearDistance: Float?
-    
     @Environment(\.modelContext) private var modelContext
     var myCard: Card
+    @State private var viewModel: CardExchangeViewModel? = nil
     
     var body: some View {
-        if isConnected {
-            VStack {
-                Image(systemName: "person.crop.circle.badge.checkmark.fill")
-                Text("\(yourName)과 연결되었습니다.")
-                Text("\(String(format: "%.1f", nearDistance ?? 0))m 떨어져 있음")
-                Button("교환") {
-                    connectionService?.sendCard(myCard)
+        Group {
+            if let viewModel = viewModel {
+                if viewModel.isConnected {
+                    VStack {
+                        Image(systemName: "person.crop.circle.badge.checkmark.fill")
+                        Text("\(viewModel.yourName)과 연결되었습니다.")
+                        Text("\(String(format: "%.1f", viewModel.nearDistance ?? 0))m 떨어져 있음")
+                        Button("교환") {
+                            viewModel.connectionService?.sendCard(myCard)
+                        }
+                    }
+                } else {
+                    VStack(spacing: 16) {
+                        Image(systemName: "antenna.radiowaves.left.and.right")
+                            .font(.system(size: 60))
+                            .foregroundStyle(.blue)
+                            .scaleEffect(1.0 + sin(Double(viewModel.dotCount) * 0.5) * 0.1)
+                            .animation(.easeInOut(duration: 0.5), value: viewModel.dotCount)
+                            .padding()
+                        
+                        Text("주변 러너를 검색 중\(String(repeating: ".", count: viewModel.dotCount))")
+                            .font(.custom("Pretendard-SemiBold", size: 20))
+                            .foregroundColor(.black)
+                            .multilineTextAlignment(.center)
+                        
+                        Text("같은 화면에 있는 친구를 찾고 있어요")
+                            .font(.custom("Pretendard-Regular", size: 14))
+                            .foregroundColor(.black.opacity(0.7))
+                            .multilineTextAlignment(.center)
+                        
+                        Button("검색 재시작") {
+                            
+                        }
+                        .padding(.top, 16)
+                        .font(.custom("Pretendard-Medium", size: 17))
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .contentShape(Rectangle())
+                    .onReceive(viewModel.dotTimer) { _ in
+                        viewModel.dotCount = (viewModel.dotCount + 1) % 4
+                    }
                 }
             }
-        } else {
-            VStack(spacing: 16) {
-                Image(systemName: "antenna.radiowaves.left.and.right")
-                    .font(.system(size: 60))
-                    .foregroundStyle(.blue)
-                    .scaleEffect(1.0 + sin(Double(dotCount) * 0.5) * 0.1)
-                    .animation(.easeInOut(duration: 0.5), value: dotCount)
-                    .padding()
-                
-                Text("주변 기기를 검색 중\(String(repeating: ".", count: dotCount))")
-                    .font(.custom("Pretendard-SemiBold", size: 20))
-                    .foregroundColor(.black)
-                    .multilineTextAlignment(.center)
-                
-                Text("같은 화면에 있는 친구를 찾고 있어요")
-                    .font(.custom("Pretendard-Regular", size: 14))
-                    .foregroundColor(.black.opacity(0.7))
-                    .multilineTextAlignment(.center)
-                
-                Button("검색 재시작") {
-                    
+        }
+        .onAppear {
+            viewModel = CardExchangeViewModel(myCard: myCard)
+            viewModel?.modelContext = modelContext
+            
+            let nearby = Nearbysession()
+            viewModel?.NearbySession = nearby
+            let service = ConnectionService(displayName: myCard.nickName)
+            service.onPeerConnected = { card in
+                DispatchQueue.main.async {
+                    viewModel?.isConnected = true
+                    viewModel?.yourName = card
                 }
-                .padding(.top, 16)
-                .font(.custom("Pretendard-Medium", size: 17))
+                if let myToken = nearby.myToken {
+                    service.sendToken(myToken)
+                }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .contentShape(Rectangle())
-            .onReceive(dotTimer) { _ in
-                dotCount = (dotCount + 1) % 4
+            service.onCardReceived = { card in
+                DispatchQueue.main.async {
+                    modelContext.insert(card)
+                }
             }
-            .onAppear {
-                let nearby = Nearbysession()
-                NearbySession = nearby
-                let service = ConnectionService(displayName: myCard.nickName)
-                service.onPeerConnected = { card in
-                    DispatchQueue.main.async {
-                        isConnected = true
-                        yourName = card
-                    }
-                    if let myToken = nearby.myToken {
-                        service.sendToken(myToken)
-                    }
+            service.startService()
+            viewModel?.connectionService = service
+            
+            nearby.onDistanceUpdated = { distance in
+                DispatchQueue.main.async {
+                    viewModel?.nearDistance = distance
                 }
-                service.onCardReceived = { card in
-                    DispatchQueue.main.async {
-                        modelContext.insert(card)
-                    }
-                }
-                service.startService()
-                connectionService = service
-                
-                nearby.onDistanceUpdated = { distance in
-                    DispatchQueue.main.async {
-                        nearDistance = distance
-                    }
-                }
-                
-                service.onTokenReceived = { token in
-                    nearby.start(peerToken: token)
-                }
+            }
+            
+            service.onTokenReceived = { token in
+                nearby.start(peerToken: token)
             }
         }
     }
