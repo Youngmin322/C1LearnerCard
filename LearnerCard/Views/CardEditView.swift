@@ -16,7 +16,7 @@ struct CardEditView: View {
     let name: String
     let nickName: String
     let session: String
-    
+  
     var body: some View {
         VStack(alignment: .trailing) {
             Text("카드 세부 사항")
@@ -38,8 +38,11 @@ struct CardEditView: View {
             Spacer()
             
             Button {
-                modelContext.insert(Card(name: name, nickName: nickName, session: session, profileImageURL: nil, phone: nil, descriptions: [descriptions], isMine: true))
+                let card = Card(name: name, nickName: nickName, session: session, profileImageURL: nil, phone: nil, descriptions: [descriptions], isMine: true)
+                modelContext.insert(card)
+                WatchService.shared.sendCard(card)
                 isEditing = false
+                
             } label: {
                 Text("완료")
                     .font(.body)

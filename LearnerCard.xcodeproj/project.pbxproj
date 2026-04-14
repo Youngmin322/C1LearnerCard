@@ -47,6 +47,20 @@
 			);
 			target = 1D681B192F6D14F700665160 /* LearnerCard */;
 		};
+		1DDFF1C02F8E1CD600E0527D /* Exceptions for "LearnerCardWatchApp" folder in "LearnerCard" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				CardDataService.swift,
+			);
+			target = 1D681B192F6D14F700665160 /* LearnerCard */;
+		};
+		1DDFF1C22F8E1EC200E0527D /* Exceptions for "LearnerCard" folder in "LearnerCard Watch Watch App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Model/Card.swift,
+			);
+			target = 1DDFF1A72F8DDEB600E0527D /* LearnerCard Watch Watch App */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -54,13 +68,17 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				1D11850E2F7A5D0B0030ED05 /* Exceptions for "LearnerCard" folder in "LearnerCard" target */,
+				1DDFF1C22F8E1EC200E0527D /* Exceptions for "LearnerCard" folder in "LearnerCard Watch Watch App" target */,
 			);
 			path = LearnerCard;
 			sourceTree = "<group>";
 		};
-		1DDFF1A92F8DDEB600E0527D /* LearnerCard Watch Watch App */ = {
+		1DDFF1A92F8DDEB600E0527D /* LearnerCardWatchApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "LearnerCard Watch Watch App";
+			exceptions = (
+				1DDFF1C02F8E1CD600E0527D /* Exceptions for "LearnerCardWatchApp" folder in "LearnerCard" target */,
+			);
+			path = LearnerCardWatchApp;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -87,7 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				1D681B1C2F6D14F700665160 /* LearnerCard */,
-				1DDFF1A92F8DDEB600E0527D /* LearnerCard Watch Watch App */,
+				1DDFF1A92F8DDEB600E0527D /* LearnerCardWatchApp */,
 				1D681B1B2F6D14F700665160 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -141,7 +159,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				1DDFF1A92F8DDEB600E0527D /* LearnerCard Watch Watch App */,
+				1DDFF1A92F8DDEB600E0527D /* LearnerCardWatchApp */,
 			);
 			name = "LearnerCard Watch Watch App";
 			packageProductDependencies = (
