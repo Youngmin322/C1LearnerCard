@@ -17,9 +17,11 @@ struct ContentView: View {
                 .padding()
             
             Spacer()
-            
-            
-            
+
+            if let card = CardDataService.shared.cardDTO {
+                Text(card.nickName)
+                Text(card.name)
+            }
             
         }
     }

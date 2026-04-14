@@ -42,7 +42,6 @@ struct CardEditView: View {
                 modelContext.insert(card)
                 WatchService.shared.sendCard(card)
                 isEditing = false
-                
             } label: {
                 Text("완료")
                     .font(.body)

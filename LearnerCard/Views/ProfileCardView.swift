@@ -48,23 +48,37 @@ struct ProfileCardView: View {
         }
         .navigationTitle("내 카드")
         .sheet(isPresented: $isEditing) {
-            NavigationStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("카드 세부 사항")
-                        .font(.title)
-                        .bold()
-                        .frame(maxWidth: .infinity, alignment: .leading)
+            if myCards.isEmpty {
+                NavigationStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("카드 세부 사항")
+                            .font(.title)
+                            .bold()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Text("카드 정보를 확인하고\n작성을 완료하세요.")
+                            .foregroundColor(.gray)
+                            .font(.title2)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 50)
                     
-                    Text("카드 정보를 확인하고\n작성을 완료하세요.")
-                        .foregroundColor(.gray)
-                        .font(.title2)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    CardFormView(isEditing: $isEditing)
                 }
-                .padding(.horizontal)
-                .padding(.top, 50)
-                
-                CardFormView(isEditing: $isEditing)
-            }
+                } else {
+                    if let myCard = myCards.first {
+                        @Bindable var card = myCard
+                        VStack {
+                            TextField("이름", text: $card.name)
+                            TextField("닉네임", text: $card.nickName)
+                            
+                            Button("완료") {
+                            isEditing = false
+                            }
+                        }
+                    }
+                }
         }
         .sheet(isPresented: $showExchange) {
             if let myCard = myCards.first {

@@ -47,13 +47,6 @@
 			);
 			target = 1D681B192F6D14F700665160 /* LearnerCard */;
 		};
-		1DDFF1C02F8E1CD600E0527D /* Exceptions for "LearnerCardWatchApp" folder in "LearnerCard" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				CardDataService.swift,
-			);
-			target = 1D681B192F6D14F700665160 /* LearnerCard */;
-		};
 		1DDFF1C22F8E1EC200E0527D /* Exceptions for "LearnerCard" folder in "LearnerCard Watch Watch App" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -75,9 +68,6 @@
 		};
 		1DDFF1A92F8DDEB600E0527D /* LearnerCardWatchApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				1DDFF1C02F8E1CD600E0527D /* Exceptions for "LearnerCardWatchApp" folder in "LearnerCard" target */,
-			);
 			path = LearnerCardWatchApp;
 			sourceTree = "<group>";
 		};

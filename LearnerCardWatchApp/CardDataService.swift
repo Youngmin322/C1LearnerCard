@@ -8,6 +8,7 @@
 import Foundation
 import WatchConnectivity
 
+@Observable
 class CardDataService: NSObject, WCSessionDelegate {
     var cardDTO: CardDTO?
     static let shared = CardDataService()
