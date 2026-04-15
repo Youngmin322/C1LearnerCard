@@ -18,7 +18,7 @@ struct CardEditView: View {
     let session: String
     
     var existingCard: Card? = nil
-  
+    
     var body: some View {
         VStack(alignment: .trailing) {
             Text("카드 세부 사항")

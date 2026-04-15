@@ -85,7 +85,7 @@ struct ProfileCardView: View {
     }
 }
 
-    #Preview {
-        ProfileCardView()
-            .modelContainer(for: Card.self, inMemory: true)
-    }
+#Preview {
+    ProfileCardView()
+        .modelContainer(for: Card.self, inMemory: true)
+}
