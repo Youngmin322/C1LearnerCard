@@ -13,7 +13,8 @@ struct ProfileCardView: View {
     @State private var showExchange = false
     @Query(filter: #Predicate<Card> { $0.isMine == true })
     private var myCards: [Card]
-     
+    var existingCard: Card? = nil
+    
     var body: some View {
         VStack {
             if let myCard = myCards.first {
@@ -48,22 +49,28 @@ struct ProfileCardView: View {
         }
         .navigationTitle("내 카드")
         .sheet(isPresented: $isEditing) {
-            NavigationStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("카드 세부 사항")
-                        .font(.title)
-                        .bold()
-                        .frame(maxWidth: .infinity, alignment: .leading)
+            if myCards.isEmpty {
+                NavigationStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("카드 세부 사항")
+                            .font(.title)
+                            .bold()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Text("카드 정보를 확인하고\n작성을 완료하세요.")
+                            .foregroundColor(.gray)
+                            .font(.title2)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 50)
                     
-                    Text("카드 정보를 확인하고\n작성을 완료하세요.")
-                        .foregroundColor(.gray)
-                        .font(.title2)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    CardFormView(isEditing: $isEditing)
                 }
-                .padding(.horizontal)
-                .padding(.top, 50)
-                
-                CardFormView(isEditing: $isEditing)
+            } else {
+                NavigationStack {
+                    CardFormView(isEditing: $isEditing, existingCard: myCards.first)
+                }
             }
         }
         .sheet(isPresented: $showExchange) {

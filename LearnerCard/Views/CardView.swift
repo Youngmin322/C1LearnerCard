@@ -67,7 +67,11 @@ struct CardView: View {
             }
         }
         .padding()
+        #if os(watchOS)
+        .frame(width: 190, height: 150)
+        #else
         .frame(width: 350, height: 190)
+        #endif
         .glassEffect(.regular, in: .rect(cornerRadius: 20))
         .contentShape(Rectangle())
         .padding()

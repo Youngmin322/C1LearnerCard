@@ -29,11 +29,11 @@ class Nearbysession: NSObject, NISessionDelegate {
         guard let peerToken = peerDiscoveryToken else {
             fatalError("don't have peer token")
         }
-
+        
         let peerObj = nearbyObjects.first { (obj) -> Bool in
             return obj.discoveryToken == peerToken
         }
-
+        
         guard let nearbyObjectUpdate = peerObj else {
             return
         }
@@ -45,6 +45,6 @@ class Nearbysession: NSObject, NISessionDelegate {
     func start(peerToken: NIDiscoveryToken) {
         peerDiscoveryToken = peerToken
         let config = NINearbyPeerConfiguration(peerToken: peerToken)
-            session.run(config)
+        session.run(config)
     }
 }

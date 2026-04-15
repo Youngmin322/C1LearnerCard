@@ -15,8 +15,23 @@ struct CardFormView: View {
     @State private var nickName = ""
     @State private var phoneNumber = ""
     @State private var session = "오전"
+    var existingCard: Card? = nil
     
     var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("카드 세부 사항")
+                .font(.title)
+                .bold()
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            Text("카드 정보를 확인하고\n작성을 완료하세요.")
+                .foregroundColor(.gray)
+                .font(.title2)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(.horizontal)
+        .padding(.top, 50)
+        
         VStack(spacing: 0) {
             HStack(alignment: .center, spacing: 30) {
                 Text("이름")
@@ -68,7 +83,7 @@ struct CardFormView: View {
         
         Spacer()
         
-        NavigationLink(destination: CardEditView(isEditing: $isEditing, name: name, nickName: nickName, session: session)) {
+        NavigationLink(destination: CardEditView(isEditing: $isEditing, name: name, nickName: nickName, session: session, existingCard: existingCard)) {
             Text("계속")
                 .font(.body)
                 .bold()
@@ -80,5 +95,4 @@ struct CardFormView: View {
         .padding(.horizontal, 40)
     }
 }
-
 
