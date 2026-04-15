@@ -9,20 +9,17 @@ import SwiftUI
 import WatchConnectivity
 
 struct ContentView: View {
+    @State private var cardService = CardDataService.shared
+
     var body: some View {
         VStack {
-            Text("내 카드")
-                .bold()
-                .font(.title)
-                .padding()
-            
-            Spacer()
-
-            if let card = CardDataService.shared.cardDTO {
+            if let card = cardService.cardDTO {
                 Text(card.nickName)
                 Text(card.name)
+            } else {
+                Text("받은 카드 없음")
+                    .foregroundStyle(.gray)
             }
-            
         }
     }
 }

@@ -31,9 +31,11 @@ class WatchService: NSObject, WCSessionDelegate {
     }
     
     func sendCard(_ card: Card) {
+        print("보냄 시도")
         let encoder = JSONEncoder()
         if let data = try? encoder.encode(card.toDTO()) {
-            try? WCSession.default.updateApplicationContext(["card" : data])
+            try? WCSession.default.updateApplicationContext(["card": data])
+            print("보냄 성공")
         }
     }
 }

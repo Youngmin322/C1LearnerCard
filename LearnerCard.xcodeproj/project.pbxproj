@@ -51,6 +51,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Model/Card.swift,
+				Views/CardView.swift,
 			);
 			target = 1DDFF1A72F8DDEB600E0527D /* LearnerCard Watch Watch App */;
 		};

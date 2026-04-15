@@ -13,7 +13,8 @@ struct ProfileCardView: View {
     @State private var showExchange = false
     @Query(filter: #Predicate<Card> { $0.isMine == true })
     private var myCards: [Card]
-     
+    var existingCard: Card? = nil
+    
     var body: some View {
         VStack {
             if let myCard = myCards.first {
@@ -66,19 +67,11 @@ struct ProfileCardView: View {
                     
                     CardFormView(isEditing: $isEditing)
                 }
-                } else {
-                    if let myCard = myCards.first {
-                        @Bindable var card = myCard
-                        VStack {
-                            TextField("이름", text: $card.name)
-                            TextField("닉네임", text: $card.nickName)
-                            
-                            Button("완료") {
-                            isEditing = false
-                            }
-                        }
-                    }
+            } else {
+                NavigationStack {
+                    CardFormView(isEditing: $isEditing, existingCard: myCards.first)
                 }
+            }
         }
         .sheet(isPresented: $showExchange) {
             if let myCard = myCards.first {
@@ -92,7 +85,7 @@ struct ProfileCardView: View {
     }
 }
 
-#Preview {
-    ProfileCardView()
-        .modelContainer(for: Card.self, inMemory: true)
-}
+    #Preview {
+        ProfileCardView()
+            .modelContainer(for: Card.self, inMemory: true)
+    }

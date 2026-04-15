@@ -19,6 +19,7 @@ class CardDataService: NSObject, WCSessionDelegate {
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
         if let data = applicationContext["card"] as? Data {
             cardDTO = try? JSONDecoder().decode(CardDTO.self, from: data)
+            print("받음")
         }
     }
     

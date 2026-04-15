@@ -16,6 +16,8 @@ struct CardEditView: View {
     let name: String
     let nickName: String
     let session: String
+    
+    var existingCard: Card? = nil
   
     var body: some View {
         VStack(alignment: .trailing) {
@@ -38,9 +40,15 @@ struct CardEditView: View {
             Spacer()
             
             Button {
-                let card = Card(name: name, nickName: nickName, session: session, profileImageURL: nil, phone: nil, descriptions: [descriptions], isMine: true)
-                modelContext.insert(card)
-                WatchService.shared.sendCard(card)
+                if let existingCard = existingCard {
+                    // 편집: 기존 카드 프로퍼티 수정
+                    existingCard.name = name
+                    existingCard.nickName = nickName
+                } else {
+                    let card = Card(name: name, nickName: nickName, session: session, profileImageURL: nil, phone: nil, descriptions: [descriptions], isMine: true)
+                    modelContext.insert(card)
+                    WatchService.shared.sendCard(card)
+                }
                 isEditing = false
             } label: {
                 Text("완료")
