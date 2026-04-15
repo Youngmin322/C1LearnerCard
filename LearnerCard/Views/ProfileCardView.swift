@@ -51,20 +51,6 @@ struct ProfileCardView: View {
         .sheet(isPresented: $isEditing) {
             if myCards.isEmpty {
                 NavigationStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("카드 세부 사항")
-                            .font(.title)
-                            .bold()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        Text("카드 정보를 확인하고\n작성을 완료하세요.")
-                            .foregroundColor(.gray)
-                            .font(.title2)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    .padding(.horizontal)
-                    .padding(.top, 50)
-                    
                     CardFormView(isEditing: $isEditing)
                 }
             } else {
