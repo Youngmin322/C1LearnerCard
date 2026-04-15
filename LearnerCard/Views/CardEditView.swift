@@ -41,9 +41,11 @@ struct CardEditView: View {
             
             Button {
                 if let existingCard = existingCard {
-                    // 편집: 기존 카드 프로퍼티 수정
                     existingCard.name = name
                     existingCard.nickName = nickName
+                    existingCard.session = session
+                    existingCard.descriptions = [descriptions]
+                    WatchService.shared.sendCard(existingCard)
                 } else {
                     let card = Card(name: name, nickName: nickName, session: session, profileImageURL: nil, phone: nil, descriptions: [descriptions], isMine: true)
                     modelContext.insert(card)

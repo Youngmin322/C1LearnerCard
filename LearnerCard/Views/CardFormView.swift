@@ -83,7 +83,7 @@ struct CardFormView: View {
         
         Spacer()
         
-        NavigationLink(destination: CardEditView(isEditing: $isEditing, name: name, nickName: nickName, session: session)) {
+        NavigationLink(destination: CardEditView(isEditing: $isEditing, name: name, nickName: nickName, session: session, existingCard: existingCard)) {
             Text("계속")
                 .font(.body)
                 .bold()
