@@ -59,15 +59,6 @@ struct ProfileCardView: View {
                 }
             }
         }
-//        .sheet(isPresented: $showExchange) {
-//            if let myCard = myCards.first {
-//                CardExchangeView(myCard: myCard)
-//                    .presentationDetents([.medium, .large])
-//            } else {
-//                Text("내 카드가 없어 교환을 시작할 수 없어요.")
-//                    .padding()
-//            }
-//        }
     }
 }
 
