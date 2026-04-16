@@ -6,15 +6,18 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     @State private var searchText = ""
+    @Query(filter: #Predicate<Card> { $0.isMine == true })
+    var myCards: [Card]
     
     var body: some View {
         TabView {
             Tab("러너", systemImage: "person.fill") {
                 NavigationStack {
-                    LearnerCardView()
+                    LearnerCardView(myCards: myCards)
                 }
             }
             
@@ -26,7 +29,7 @@ struct ContentView: View {
             
             Tab(role: .search) {
                 NavigationStack {
-                    LearnerCardView(searchText: searchText)
+                    LearnerCardView(searchText: searchText, myCards: myCards)
                 }
                 .searchable(text: $searchText, prompt: "러너 검색")
             }

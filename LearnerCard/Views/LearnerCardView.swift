@@ -12,9 +12,11 @@ struct LearnerCardView: View {
     
     @State private var selectedIndex: Int? = nil
     var searchText: String = ""
-    
+    var myCards: [Card]
+    @State private var isEditing = false
+    @State private var showExchange = false
     @Query(filter: #Predicate<Card> { $0.isMine == false })
-    private var cards: [Card]
+    var cards: [Card]
     
     private var filteredCards: [Card] {
         if searchText.isEmpty {
@@ -27,6 +29,7 @@ struct LearnerCardView: View {
     }
     
     var body: some View {
+        
         Group {
             if cards.isEmpty {
                 VStack {
@@ -65,11 +68,30 @@ struct LearnerCardView: View {
             }
         }
         .navigationTitle("러너 카드")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                
+                Button(action: {
+                    showExchange = true
+                }) {
+                    Image(systemName: "antenna.radiowaves.left.and.right")
+                }
+                .sheet(isPresented: $showExchange) {
+                    if let myCard = myCards.first {
+                        CardExchangeView(myCard: myCard)
+                            .presentationDetents([.medium, .large])
+                    } else {
+                        Text("내 카드가 없어 교환을 시작할 수 없어요.")
+                            .padding()
+                    }
+                }
+            }
+        }
     }
 }
-
-#Preview {
-    LearnerCardView()
-        .modelContainer(for: Card.self, inMemory: true)
-}
-
+//
+//#Preview {
+//    LearnerCardView()
+//        .modelContainer(for: Card.self, inMemory: true)
+//}
+//
