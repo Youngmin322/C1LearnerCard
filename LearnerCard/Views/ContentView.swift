@@ -28,24 +28,27 @@ struct ContentView: View {
                 
                 Tab("카드", systemImage: "person.text.rectangle.fill") {
                     NavigationStack {
-                        ProfileCardView()
+                        ZStack {
+                            Color("BackgroundGray")
+                                .ignoresSafeArea()
+                            ProfileCardView()
+                        }
                     }
                 }
                 
                 Tab(role: .search) {
                     NavigationStack {
-                        LearnerCardView(searchText: searchText, myCards: myCards)
+                        ZStack {
+                            Color("BackgroundGray")
+                                .ignoresSafeArea()
+                            LearnerCardView(searchText: searchText, myCards: myCards)
+                        }
+                        .searchable(text: $searchText, prompt: "러너 검색")
                     }
-                    .searchable(text: $searchText, prompt: "러너 검색")
                 }
             }
         }
     }
-    
-//    init() {
-//        let appearance = UITabBar.appearance()
-//        appearance.backgroundColor = .black
-//    }
 }
 
 #Preview {
