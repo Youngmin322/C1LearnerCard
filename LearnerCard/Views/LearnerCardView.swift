@@ -48,6 +48,7 @@ struct LearnerCardView: View {
                                     
                                     CardView(learnerCard: item)
                                         .frame(maxWidth: .infinity, alignment: .center)
+                                        .blur(radius: offsetY / 40)
                                         .offset(y: offsetY)
                                         .onTapGesture {
                                             withAnimation(.spring()) {
