@@ -40,7 +40,7 @@ struct LearnerCardView: View {
             } else {
                 GeometryReader { screen in
                     ScrollView {
-                        VStack(spacing: 0) {
+                        VStack(spacing: 10) {
                             ForEach(Array(filteredCards.enumerated()), id:\.element.id) { index, item in
                                 GeometryReader { geo in
                                     let minY = geo.frame(in: .global).minY
@@ -90,9 +90,9 @@ struct LearnerCardView: View {
         }
     }
 }
-//
-//#Preview {
-//    LearnerCardView()
-//        .modelContainer(for: Card.self, inMemory: true)
-//}
-//
+
+#Preview {
+    LearnerCardView(myCards: [])
+        .modelContainer(for: Card.self, inMemory: true)
+}
+
