@@ -1,7 +1,7 @@
 //
 //  ProfileCardView.swift
 //  LearnerCard
-//e
+//
 //  Created by Youngmin Cho on 3/24/26.
 //
 
@@ -51,35 +51,12 @@ struct ProfileCardView: View {
         .sheet(isPresented: $isEditing) {
             if myCards.isEmpty {
                 NavigationStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("카드 세부 사항")
-                            .font(.title)
-                            .bold()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        Text("카드 정보를 확인하고\n작성을 완료하세요.")
-                            .foregroundColor(.gray)
-                            .font(.title2)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    .padding(.horizontal)
-                    .padding(.top, 50)
-                    
                     CardFormView(isEditing: $isEditing)
                 }
             } else {
                 NavigationStack {
                     CardFormView(isEditing: $isEditing, existingCard: myCards.first)
                 }
-            }
-        }
-        .sheet(isPresented: $showExchange) {
-            if let myCard = myCards.first {
-                CardExchangeView(myCard: myCard)
-                    .presentationDetents([.medium, .large])
-            } else {
-                Text("내 카드가 없어 교환을 시작할 수 없어요.")
-                    .padding()
             }
         }
     }

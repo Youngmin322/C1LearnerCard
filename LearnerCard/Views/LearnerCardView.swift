@@ -12,9 +12,11 @@ struct LearnerCardView: View {
     
     @State private var selectedIndex: Int? = nil
     var searchText: String = ""
-    
+    var myCards: [Card]
+    @State private var isEditing = false
+    @State private var showExchange = false
     @Query(filter: #Predicate<Card> { $0.isMine == false })
-    private var cards: [Card]
+    var cards: [Card]
     
     private var filteredCards: [Card] {
         if searchText.isEmpty {
@@ -27,6 +29,7 @@ struct LearnerCardView: View {
     }
     
     var body: some View {
+        
         Group {
             if cards.isEmpty {
                 VStack {
@@ -37,7 +40,7 @@ struct LearnerCardView: View {
             } else {
                 GeometryReader { screen in
                     ScrollView {
-                        VStack(spacing: 0) {
+                        VStack(spacing: 10) {
                             ForEach(Array(filteredCards.enumerated()), id:\.element.id) { index, item in
                                 GeometryReader { geo in
                                     let minY = geo.frame(in: .global).minY
@@ -45,6 +48,7 @@ struct LearnerCardView: View {
                                     
                                     CardView(learnerCard: item)
                                         .frame(maxWidth: .infinity, alignment: .center)
+                                        .blur(radius: offsetY / 40)
                                         .offset(y: offsetY)
                                         .onTapGesture {
                                             withAnimation(.spring()) {
@@ -65,11 +69,30 @@ struct LearnerCardView: View {
             }
         }
         .navigationTitle("러너 카드")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                
+                Button(action: {
+                    showExchange = true
+                }) {
+                    Image(systemName: "antenna.radiowaves.left.and.right")
+                }
+                .sheet(isPresented: $showExchange) {
+                    if let myCard = myCards.first {
+                        CardExchangeView(myCard: myCard)
+                            .presentationDetents([.medium, .large])
+                    } else {
+                        Text("내 카드가 없어 교환을 시작할 수 없어요.")
+                            .padding()
+                    }
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    LearnerCardView()
+    LearnerCardView(myCards: [])
         .modelContainer(for: Card.self, inMemory: true)
 }
 

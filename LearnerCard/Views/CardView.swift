@@ -25,7 +25,6 @@ struct CardView: View {
                 VStack(alignment: .leading) {
                     Text(learnerCard.name)
                         .bold()
-                    
                     Text(learnerCard.nickName)
                 }
                 

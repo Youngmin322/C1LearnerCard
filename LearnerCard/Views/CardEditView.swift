@@ -16,7 +16,6 @@ struct CardEditView: View {
     let name: String
     let nickName: String
     let session: String
-    
     var existingCard: Card? = nil
     
     var body: some View {
