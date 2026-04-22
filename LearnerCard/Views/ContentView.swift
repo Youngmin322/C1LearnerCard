@@ -16,7 +16,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             TabView {
-                Tab("러너", systemImage: "person.fill") {
+                Tab("러너카드", systemImage: "person.text.rectangle.fill") {
                     NavigationStack {
                         ZStack {
                             Color("BackgroundGray")
@@ -26,12 +26,12 @@ struct ContentView: View {
                     }
                 }
                 
-                Tab("카드", systemImage: "person.text.rectangle.fill") {
+                Tab("프로필", systemImage: "person.fill") {
                     NavigationStack {
                         ZStack {
                             Color("BackgroundGray")
                                 .ignoresSafeArea()
-                            ProfileCardView()
+                            ProfileCardView2()
                         }
                     }
                 }
