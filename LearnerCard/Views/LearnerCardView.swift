@@ -65,6 +65,7 @@ struct LearnerCardView: View {
                             }
                         }
                     }
+                    .scrollDisabled(selectedIndex != nil)
                 }
             }
         }
