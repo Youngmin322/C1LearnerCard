@@ -59,7 +59,7 @@ struct ProfileCardView2: View {
                     Divider()
                     
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("추가 정보")
+                        Text("관심 기술 및 관심 분야")
                             .font(.subheadline)
                             .foregroundColor(.gray)
                         ForEach(myCard.descriptions, id: \.self) { desc in
