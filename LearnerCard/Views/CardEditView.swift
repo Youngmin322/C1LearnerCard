@@ -16,6 +16,7 @@ struct CardEditView: View {
     let name: String
     let nickName: String
     let session: String
+    let phoneNumber: String
     var existingCard: Card? = nil
     
     var body: some View {
@@ -43,10 +44,11 @@ struct CardEditView: View {
                     existingCard.name = name
                     existingCard.nickName = nickName
                     existingCard.session = session
+                    existingCard.phone = phoneNumber
                     existingCard.descriptions = [descriptions]
                     WatchService.shared.sendCard(existingCard)
                 } else {
-                    let card = Card(name: name, nickName: nickName, session: session, profileImageURL: nil, phone: nil, descriptions: [descriptions], isMine: true)
+                    let card = Card(name: name, nickName: nickName, session: session, profileImageURL: nil, phone: phoneNumber, descriptions: [descriptions], isMine: true)
                     modelContext.insert(card)
                     WatchService.shared.sendCard(card)
                 }

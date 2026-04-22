@@ -91,7 +91,7 @@ struct ProfileCardView2: View {
                 }
             }
         }
-        .navigationTitle("내 카드")
+        .navigationTitle("프로필")
         .sheet(isPresented: $isEditing) {
             if myCards.isEmpty {
                 NavigationStack {

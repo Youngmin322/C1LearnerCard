@@ -97,9 +97,9 @@ struct CardFormView: View {
             .foregroundStyle(.gray)
             .padding(.horizontal)
         
-        Spacer()
+        Spacer()  
         
-        NavigationLink(destination: CardEditView(isEditing: $isEditing, name: name, nickName: nickName, session: session, existingCard: existingCard)) {
+        NavigationLink(destination: CardEditView(isEditing: $isEditing, name: name, nickName: nickName, session: session, phoneNumber: phoneNumber, existingCard: existingCard)) {
             Text("계속")
                 .font(.body)
                 .bold()
