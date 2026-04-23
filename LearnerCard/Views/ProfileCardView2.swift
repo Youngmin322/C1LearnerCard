@@ -11,6 +11,11 @@ import SwiftData
 struct ProfileCardView2: View {
     @State private var isEditing = false
     @State private var showExchange = false
+    @State private var showPhoneEdit = false
+    @State private var showSessionEdit = false
+    @State private var showNameEdit = false
+    @State private var showNickNameEdit = false
+    @State private var showDescriptionEdit = false
     @Query(filter: #Predicate<Card> { $0.isMine == true })
     private var myCards: [Card]
     var existingCard: Card? = nil
@@ -28,52 +33,130 @@ struct ProfileCardView2: View {
                             .foregroundColor(.gray)
                     )
                 
-                // 이름 + 닉네임
-                VStack(spacing: 4) {
-                    Text(myCard.name)
-                        .font(.title)
-                        .bold()
-                    Text(myCard.nickName)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                }
-                
-                // 세션
-                Text(myCard.session)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 6)
-                    .background(Capsule().fill(Color.blue.opacity(0.15)))
-                    .foregroundColor(.blue)
-                    .font(.subheadline)
-                
                 // 상세 정보 카드
                 VStack(spacing: 12) {
-                    HStack {
-                        Text("전화번호")
-                            .foregroundColor(.gray)
-                        Spacer()
-                        Text(myCard.phone ?? "없음")
+                    Button {
+                        showNickNameEdit = true
+                    } label: {
+                        HStack {
+                            Text("닉네임")
+                                .foregroundColor(.gray)
+                            
+                            Spacer()
+                            
+                            Text(myCard.nickName)
+                                .foregroundColor(.primary)
+                            
+                            Image(systemName: "chevron.right")
+                                .foregroundStyle(.gray)
+                        }
+                        .font(.subheadline)
                     }
-                    .font(.subheadline)
+                    Divider()
+                    
+                    Button {
+                        showNameEdit = true
+                    } label: {
+                        HStack {
+                            Text("이름")
+                                .foregroundColor(.gray)
+                            
+                            Spacer()
+                            
+                            Text(myCard.name)
+                                .foregroundColor(.primary)
+                            
+                            Image(systemName: "chevron.right")
+                                .foregroundStyle(.gray)
+                        }
+                        .font(.subheadline)
+                    }
                     
                     Divider()
                     
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("관심 기술 및 관심 분야")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                        ForEach(myCard.descriptions, id: \.self) { desc in
-                            Text(desc)
-                                .font(.subheadline)
+                    Button {
+                        showSessionEdit = true
+                    } label: {
+                        HStack {
+                            Text("세션")
+                                .foregroundColor(.gray)
+                            
+                            Spacer()
+                            
+                            Text(myCard.session)
+                                .foregroundColor(.primary)
+                            
+                            Image(systemName: "chevron.right")
+                                .foregroundStyle(.gray)
+                        }
+                        .font(.subheadline)
+                    }
+                    
+                    Divider()
+                    
+                    Button {
+                        showPhoneEdit = true
+                    } label: {
+                        HStack {
+                            Text("전화번호")
+                                .foregroundColor(.gray)
+                            Spacer()
+                            Text(myCard.phone ?? "없음")
+                                .foregroundColor(.primary)
+                            Image(systemName: "chevron.right")
+                                .foregroundStyle(.gray)
+                        }
+                        .font(.subheadline)
+                    }
+                    
+                    Divider()
+                    
+                    Button {
+                        showDescriptionEdit = true
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text("관심 기술 및 관심 분야")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                                ForEach(myCard.descriptions, id: \.self) { desc in
+                                    Text(desc)
+                                        .font(.subheadline)
+                                        .foregroundColor(.primary)
+                                }
+                            }
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundStyle(.gray)
                         }
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding()
                 .glassEffect(.regular, in: .rect(cornerRadius: 16))
                 .padding(.horizontal)
                 
                 Spacer()
+                
+                .sheet(isPresented: $showPhoneEdit) {
+                    PhoneEditView(card: myCard)
+                        .presentationDetents([.medium])
+                }
+                .sheet(isPresented: $showNameEdit) {
+                    NameEditView(card: myCard)
+                        .presentationDetents([.medium])
+                }
+                .sheet(isPresented: $showNickNameEdit) {
+                    NickNameEditView(card: myCard)
+                        .presentationDetents([.medium])
+                }
+                .sheet(isPresented: $showSessionEdit) {
+                    SessionEditView(card: myCard)
+                        .presentationDetents([.medium])
+                }
+                .sheet(isPresented: $showDescriptionEdit) {
+                    DescriptionEditView(card: myCard)
+                        .presentationDetents([.medium])
+                }
             } else {
                 Text("아직 내 카드가 없어요! \n 카드를 만들어 보세요!")
                     .foregroundColor(.gray)
@@ -108,6 +191,10 @@ struct ProfileCardView2: View {
 
 
 #Preview {
-    ProfileCardView2()
-        .modelContainer(for: Card.self, inMemory: true)
+    let container = try! ModelContainer(for: Card.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+    let card = Card(name: "조영민", nickName: "Owen", session: "오전", profileImageURL: nil, phone: "010-9659-9798", descriptions: ["Swift", "UIKit"], isMine: true)
+    container.mainContext.insert(card)
+    
+    return ProfileCardView2()
+        .modelContainer(container)
 }
