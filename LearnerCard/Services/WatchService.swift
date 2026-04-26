@@ -12,17 +12,11 @@ import WatchConnectivity
 class WatchService: NSObject, WCSessionDelegate {
     static let shared = WatchService()
     
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: (any Error)?) {
-        
-    }
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: (any Error)?) { }
     
-    func sessionDidBecomeInactive(_ session: WCSession) {
-        
-    }
+    func sessionDidBecomeInactive(_ session: WCSession) { }
     
-    func sessionDidDeactivate(_ session: WCSession) {
-        
-    }
+    func sessionDidDeactivate(_ session: WCSession) { }
     
     override init() {
         super.init()
@@ -39,4 +33,3 @@ class WatchService: NSObject, WCSessionDelegate {
         }
     }
 }
-

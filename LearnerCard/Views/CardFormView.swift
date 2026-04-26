@@ -59,6 +59,22 @@ struct CardFormView: View {
                 .padding(10)
             
             HStack(alignment: .center, spacing: 30) {
+                Text("전화번호")
+                    .bold()
+                    .frame(width: 60, alignment: .leading)
+                
+                TextField("", text: $phoneNumber, prompt: Text("선택 사항").fontWeight(.regular))
+                    .keyboardType(.numberPad)
+                    .onChange(of: phoneNumber) { oldValue, newValue in
+                        phoneNumber = formatPhoneNumber(newValue)
+                    }
+            }
+            
+            Divider()
+                .padding(.horizontal, -6)
+                .padding(10)
+            
+            HStack(alignment: .center, spacing: 30) {
                 Text("세션")
                     .bold()
                     .frame(width: 60, alignment: .leading)
@@ -81,9 +97,9 @@ struct CardFormView: View {
             .foregroundStyle(.gray)
             .padding(.horizontal)
         
-        Spacer()
+        Spacer()  
         
-        NavigationLink(destination: CardEditView(isEditing: $isEditing, name: name, nickName: nickName, session: session, existingCard: existingCard)) {
+        NavigationLink(destination: CardEditView(isEditing: $isEditing, name: name, nickName: nickName, session: session, phoneNumber: phoneNumber, existingCard: existingCard)) {
             Text("계속")
                 .font(.body)
                 .bold()
@@ -96,3 +112,24 @@ struct CardFormView: View {
     }
 }
 
+
+private func formatPhoneNumber(_ number: String) -> String {
+     let cleanNumber = number.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+     let mask = "XXX-XXXX-XXXX"
+     
+     var result = ""
+     var index = cleanNumber.startIndex
+     
+     for char in mask {
+         if index == cleanNumber.endIndex {
+             break
+         }
+         if char == "X" {
+             result.append(cleanNumber[index])
+             index = cleanNumber.index(after: index)
+         } else {
+             result.append(char)
+         }
+     }
+     return result
+ }
